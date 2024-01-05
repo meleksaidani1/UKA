@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # Functions
 is_mounted() {
     mountpoint -q "$1"
@@ -31,12 +30,16 @@ on_install() {
 
     mkdir -p "$MODPATH/system" || exit 1
 
-    echo "- Checking and extracting files"
+    # Check if ZIPFILE is set and exists
+    while [ ! -f "$ZIPFILE" ]; do
+        echo -n "Enter the path to the ZIP file: "
+        read -r ZIPFILE
+        if [ ! -f "$ZIPFILE" ]; then
+            echo "The ZIPFILE '$ZIPFILE' does not exist."
+        fi
+    done
 
-    if [ ! -f "$ZIPFILE" ]; then
-        echo "The ZIPFILE '$ZIPFILE' does not exist."
-        exit 1
-    fi
+    echo "- Checking and extracting files"
 
     tar xJf "$ZIPFILE" -C "$MODPATH/system" bin.tar.xz >/dev/null || exit 1
     tar xJf "$ZIPFILE" -C "$MODPATH" uninstall.sh >/dev/null || exit 1
