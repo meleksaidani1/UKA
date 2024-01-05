@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Set your ZIP file path here
-ZIPFILE="./module.zip"
 
 # Functions
 is_mounted() {
