@@ -30,8 +30,12 @@ on_install() {
     mkdir -p "$MODPATH/system" || { echo "Failed to create system directory"; exit 1; }
     mkdir -p "/data/local" || { echo "Failed to create local directory"; exit 1; }
 
-    echo "- Extracting files"
-    # Modify paths accordingly based on your ZIPFILE structure
+    echo "- Checking and extracting files"
+    if [ ! -f "$ZIPFILE" ]; then
+        echo "The ZIPFILE '$ZIPFILE' does not exist."
+        exit 1
+    fi
+
     tar xJf "$ZIPFILE" -C "$MODPATH/system" bin.tar.xz || { echo "Failed to extract bin.tar.xz"; exit 1; }
     tar xJf "$ZIPFILE" -C "$MODPATH" uninstall.sh || { echo "Failed to extract uninstall.sh"; exit 1; }
     tar xJf "$ZIPFILE" -C "/data" binary.tar.xz || { echo "Failed to extract binary.tar.xz"; exit 1; }
