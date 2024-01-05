@@ -15,6 +15,9 @@ moun_t() {
     fi
 }
 
+# Set your module's path
+MODPATH="/data/data/com.termux/files/home/UKA_5.27_magisk_sign"
+
 on_install() {
     echo "- Mounting /system, /data, and rootfs"
 
